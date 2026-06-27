@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useTheme } from "../ThemeProvider";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Sun, Moon, Search, MoreHorizontal, X, ArrowRight } from "lucide-react";
+import { useLenis } from "@studio-freight/react-lenis";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home", id: "home" },
@@ -74,12 +75,18 @@ export default function Navbar() {
     window.dispatchEvent(event);
   };
 
+  const lenis = useLenis();
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     setMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (lenis) {
+      lenis.scrollTo(`#${id}`, { duration: 1.2 });
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
