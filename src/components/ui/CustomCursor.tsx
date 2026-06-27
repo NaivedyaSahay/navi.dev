@@ -6,6 +6,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export default function CustomCursor() {
   const [hoverType, setHoverType] = useState<"default" | "link" | "input" | "none">("default");
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
 
   // Position coordinates
   const mouseX = useMotionValue(-100);
@@ -17,9 +18,16 @@ export default function CustomCursor() {
   const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    // Check if device supports hover/has mouse
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-    if (isTouchDevice) {
+    const handleTouch = () => {
+      setIsTouch(true);
+      setIsVisible(false);
+    };
+    window.addEventListener("touchstart", handleTouch, { passive: true });
+    return () => window.removeEventListener("touchstart", handleTouch);
+  }, []);
+
+  useEffect(() => {
+    if (isTouch) {
       setIsVisible(false);
       return;
     }
@@ -65,7 +73,7 @@ export default function CustomCursor() {
       document.removeEventListener("mouseenter", handleMouseEnter);
       window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [mouseX, mouseY, isVisible]);
+  }, [mouseX, mouseY, isVisible, isTouch]);
 
   if (!isVisible) return null;
 
@@ -74,7 +82,7 @@ export default function CustomCursor() {
     <>
       {/* Outer Glow Ring */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 -mt-4 -ml-4 border border-foreground/30 rounded-full pointer-events-none z-9999 mix-blend-difference"
+        className="fixed top-0 left-0 w-8 h-8 -mt-4 -ml-4 border border-white/40 rounded-full pointer-events-none z-9999 mix-blend-difference"
         style={{
           x: cursorX,
           y: cursorY,
@@ -82,13 +90,13 @@ export default function CustomCursor() {
         animate={{
           scale: hoverType === "link" ? 1.8 : hoverType === "input" ? 0.3 : 1,
           backgroundColor: hoverType === "link" ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)",
-          borderColor: hoverType === "link" ? "rgba(255, 255, 255, 1)" : "rgba(var(--foreground), 0.3)",
+          borderColor: hoverType === "link" ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.4)",
         }}
         transition={{ type: "tween", duration: 0.15 }}
       />
       {/* Inner Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 -mt-[3px] -ml-[3px] bg-foreground rounded-full pointer-events-none z-9999 mix-blend-difference"
+        className="fixed top-0 left-0 w-1.5 h-1.5 -mt-[3px] -ml-[3px] bg-white rounded-full pointer-events-none z-9999 mix-blend-difference"
         style={{
           x: cursorX,
           y: cursorY,
