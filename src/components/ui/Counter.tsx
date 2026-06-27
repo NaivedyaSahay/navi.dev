@@ -11,7 +11,7 @@ interface CounterProps {
 
 export default function Counter({ value, suffix = "", duration = 2 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-10px" });
   const [count, setCount] = useState(0);
 
   useEffect(() => {
