@@ -22,27 +22,30 @@ export default function FlippingProfileCard() {
   const { scrollY } = useScroll();
 
   // Scroll ranges:
-  // From scroll = 0 (top of page) to scroll = 500 (scrolled down)
-  const scrollRange = [0, 500];
+  // We use a shorter scroll range on mobile (0 to 300) so the card settles into its slot quickly.
+  const scrollRange = isMobile ? [0, 300] : [0, 500];
 
   // Map scroll progress to Y translation dynamically:
-  // We use viewport-relative calculation to ensure consistent proportions.
-  // -54% of viewport height places the card exactly overlapping the lower part of 'ENGINEER' when shifted up.
-  // -38% of viewport height is optimal for mobile cards when shifted up.
+  // On desktop, we translate from -54% of viewport height.
+  // On mobile, we translate from -96% of viewport height to pull the card up from its lower stacked position into the Hero section at the start.
   const desktopOffset = -(windowHeight * 0.54);
-  const mobileOffset = -(windowHeight * 0.38);
+  const mobileOffset = -(windowHeight * 0.96);
 
   const yTranslate = useTransform(
     scrollY,
     scrollRange,
-    isMobile ? [mobileOffset, 0] : [desktopOffset, 0]
+    [isMobile ? mobileOffset : desktopOffset, 0]
   );
 
   // Map scroll progress to 3D RotateY (flip from 0deg to 180deg)
   const rotateY = useTransform(scrollY, scrollRange, [0, 180]);
 
   // Map scroll progress to scale: pinch down slightly in middle of flip for fluid feel
-  const scale = useTransform(scrollY, [0, 250, 500], [1, 0.92, 1]);
+  const scale = useTransform(
+    scrollY,
+    isMobile ? [0, 150, 300] : [0, 250, 500],
+    [1, 0.92, 1]
+  );
 
   // Smooth out the motion values with springs
   const smoothY = useSpring(yTranslate, { stiffness: 90, damping: 20 });

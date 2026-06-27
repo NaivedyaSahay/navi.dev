@@ -32,7 +32,7 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex flex-col justify-between overflow-hidden py-12 px-6 bg-grid"
+      className="relative min-h-screen z-30 flex flex-col justify-between overflow-hidden pt-12 pb-20 sm:py-12 px-6 bg-grid"
     >
       {/* Background elements */}
       <ParticlesBackground />
@@ -51,7 +51,7 @@ export default function Hero() {
 
       {/* Main Centered Content */}
       <div className="max-w-7xl mx-auto w-full flex flex-col items-center justify-center flex-1 relative z-10 text-center">
-        <div className="relative inline-block select-none -translate-y-12 sm:-translate-y-16">
+        <div className="relative inline-block select-none -translate-y-12 sm:-translate-y-16 z-30">
           {/* Star Icon (Left Side) */}
           <motion.div
             initial={{ opacity: 0, scale: 0 }}

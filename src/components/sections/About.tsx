@@ -53,7 +53,7 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="py-24 px-6 relative border-t border-border">
+    <section id="about" className="py-24 px-6 relative border-t border-border z-10">
       <div className="max-w-7xl mx-auto flex flex-col gap-24">
         
         {/* Main 3-Column Introduction Grid (From User Screenshots) */}
