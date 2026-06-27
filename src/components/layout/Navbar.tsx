@@ -163,7 +163,7 @@ export default function Navbar() {
       {/* Expanded Menu Drawer */}
       <AnimatePresence>
         {menuOpen && (
-          <div className="fixed inset-0 z-30">
+          <div className="fixed inset-0 z-50">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
