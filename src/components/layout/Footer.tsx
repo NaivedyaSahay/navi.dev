@@ -37,7 +37,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-border bg-card/20 py-16 px-6">
+    <footer className="relative border-t border-border bg-card/20 pt-16 pb-0 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
         
         {/* Left Side: Brand and short description */}
@@ -91,6 +91,13 @@ export default function Footer() {
         <span className="text-[10px] font-mono text-muted-foreground flex items-center gap-1">
           Designed & Built by Naivedya Raj <ArrowUpRight className="w-3 h-3" />
         </span>
+      </div>
+
+      {/* Giant Typography Name (MATVEYAN style) */}
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden mt-16 select-none pointer-events-none">
+        <h1 className="font-sans text-[15vw] font-black tracking-tighter text-center leading-[0.75] uppercase bg-gradient-to-b from-foreground via-foreground/90 to-background bg-clip-text text-transparent translate-y-3">
+          NAIVEDYA
+        </h1>
       </div>
 
       {/* Floating/Magnetic Back to Top Button */}
